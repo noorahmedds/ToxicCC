@@ -1,0 +1,280 @@
+bplist00“_WebMainResource_WebSubresources’	
+^WebResourceURL_WebResourceFrameName_WebResourceData_WebResourceMIMEType_WebResourceTextEncodingName_Shttps://nlp.stanford.edu/IR-book/html/htmledition/tf-idf-weighting-1.html#eqn:tfidfPO%“<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"><!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others --><html><head>
+<title>Tf-idf weighting</title>
+<meta name="description" content="Tf-idf weighting">
+<meta name="keywords" content="irbook">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+
+<meta name="Generator" content="LaTeX2HTML v2002-2-1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+<link rel="STYLESHEET" href="irbook.css">
+
+<link rel="previous" href="inverse-document-frequency-1.html">
+<link rel="up" href="term-frequency-and-weighting-1.html">
+<link rel="next" href="the-vector-space-model-for-scoring-1.html">
+</head>
+
+<body>
+<!--Navigation Panel-->
+<a name="tex2html1935" href="the-vector-space-model-for-scoring-1.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="http://nlp.stanford.edu/IR-book/html/icons/next.png"></a> 
+<a name="tex2html1929" href="term-frequency-and-weighting-1.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="http://nlp.stanford.edu/IR-book/html/icons/up.png"></a> 
+<a name="tex2html1925" href="inverse-document-frequency-1.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="http://nlp.stanford.edu/IR-book/html/icons/prev.png"></a> 
+<a name="tex2html1931" href="contents-1.html">
+<img width="65" height="24" align="BOTTOM" border="0" alt="contents" src="http://nlp.stanford.edu/IR-book/html/icons/contents.png"></a> 
+<a name="tex2html1933" href="index-1.html">
+<img width="43" height="24" align="BOTTOM" border="0" alt="index" src="http://nlp.stanford.edu/IR-book/html/icons/index.png"></a> 
+<br>
+<b> Next:</b> <a name="tex2html1936" href="the-vector-space-model-for-scoring-1.html">The vector space model</a>
+<b> Up:</b> <a name="tex2html1930" href="term-frequency-and-weighting-1.html">Term frequency and weighting</a>
+<b> Previous:</b> <a name="tex2html1926" href="inverse-document-frequency-1.html">Inverse document frequency</a>
+ &nbsp; <b>  <a name="tex2html1932" href="contents-1.html">Contents</a></b> 
+ &nbsp; <b>  <a name="tex2html1934" href="index-1.html">Index</a></b> 
+<br>
+<br>
+<!--End of Navigation Panel-->
+
+<h2><a name="SECTION001122000000000000000">
+Tf-idf weighting</a>
+</h2>
+
+<p>
+We now combine the definitions of term frequency and inverse document frequency, to produce a composite weight for each term in each document. The <a name="7975"></a> <i>tf-idf</i>  weighting scheme assigns to term <img width="10" height="32" align="MIDDLE" border="0" src="img67.png" alt="$t$"> a weight in document <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$"> given by
+
+</p><p>
+<br>
+</p><div align="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+\mbox{tf-idf}_{t,d} = \mbox{tf}_{t,d} \times \mbox{idf}_t.
+\end{equation}
+ -->
+<table width="100%" align="CENTER">
+<tbody><tr valign="MIDDLE"><td align="CENTER" nowrap=""><a name="eqn:tfidf"></a><img width="145" height="29" border="0" src="img406.png" alt="\begin{displaymath}
+\mbox{tf-idf}_{t,d} = \mbox{tf}_{t,d} \times \mbox{idf}_t.
+\end{displaymath}"></td>
+<td width="10" align="RIGHT">
+(22)</td></tr>
+</tbody></table>
+<br clear="ALL"></div><p></p>
+
+<p>
+In other words, <!-- MATH
+ $\mbox{tf-idf}_{t,d}$
+ -->
+<img width="54" height="31" align="MIDDLE" border="0" src="img407.png" alt="$\mbox{tf-idf}_{t,d}$"> assigns to term <img width="10" height="32" align="MIDDLE" border="0" src="img67.png" alt="$t$"> a weight in document <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$"> that is
+
+</p><p>
+
+</p><ol>
+<li>highest when <img width="10" height="32" align="MIDDLE" border="0" src="img67.png" alt="$t$"> occurs many times within a small number of documents (thus lending high discriminating power to those documents);
+
+<p>
+</p></li>
+<li><p>
+lower when the term occurs fewer times in a document, or occurs in many documents (thus offering a less pronounced relevance signal);
+
+</p><p>
+</p></li>
+<li><p>
+lowest when the term occurs in virtually all documents.
+
+</p><p>
+</p></li>
+</ol>
+
+<p>
+<a name="p:docvector"></a> 
+At this point, we may view each document as a <a name="7990"></a> <i>vector</i>  with one component corresponding to each term in the dictionary, together with a weight for each component that is given by (<a href="#eqn:tfidf">22</a>). For dictionary terms that do not occur in a document, this weight is zero.  This vector form will prove to be crucial to scoring and ranking; we will develop these ideas in Section <a href="the-vector-space-model-for-scoring-1.html#sec:docvectors">6.3</a> . As a first step, we introduce the <i>overlap score measure</i>: the score of a document <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$"> is the sum, over all query terms, of the number of times each of the query terms occurs in <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$">. We can refine this idea so that we add up not the number of occurrences of each query term <img width="10" height="32" align="MIDDLE" border="0" src="img67.png" alt="$t$"> in <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$">, but instead the tf-idf weight of each term in <img width="12" height="31" align="MIDDLE" border="0" src="img354.png" alt="$d$">.
+<br>
+</p><div align="RIGHT">
+
+<!-- MATH
+ \begin{equation}
+\mbox{Score}(q,d)=\sum_{t\in q} \mbox{tf-idf}_{t,d}.
+\end{equation}
+ -->
+<table width="100%" align="CENTER">
+<tbody><tr valign="MIDDLE"><td align="CENTER" nowrap=""><a name="eqn:docscore"></a><img width="171" height="45" border="0" src="img408.png" alt="\begin{displaymath}
+\mbox{Score}(q,d)=\sum_{t\in q} \mbox{tf-idf}_{t,d}.
+\end{displaymath}"></td>
+<td width="10" align="RIGHT">
+(23)</td></tr>
+</tbody></table>
+<br clear="ALL"></div><p></p>
+In Section <a href="the-vector-space-model-for-scoring-1.html#sec:docvectors">6.3</a>  we will develop a more rigorous form of Equation&nbsp;<a href="#eqn:docscore">23</a>.
+
+<p>
+<b>Exercises.</b>
+</p><ul>
+<li>Why is the idf of a term always finite?
+
+<p>
+</p></li>
+<li>What is the idf of a term that occurs in every document? Compare this with the use of stop word lists.
+
+<p>
+</p></li>
+<li><a name="ex:tfidf"></a>Consider the table of term frequencies for 3 documents denoted Doc1, Doc2, Doc3 in Figure <a href="#fig:tfgraph">6.9</a> .
+
+<div align="CENTER"><a name="fig:tfgraph"></a><a name="p:tfgraph"></a><a name="8645"></a>
+<table>
+<caption align="BOTTOM"><strong>Figure 6.9:</strong>
+Table of tf values for Exercise&nbsp;<a href="#ex:tfidf">6.2.2</a>.</caption>
+<tbody><tr><td><img width="260" height="98" border="0" src="img409.png" alt="\begin{figure}\begin{tabular}{\vert\vert l\vert r\vert r\vert r\vert\vert}
+\hlin...
+...rance &amp; 0 &amp; 33 &amp; 29 \\
+best &amp; 14 &amp; 0 &amp; 17 \\
+\hline
+\end{tabular}
+\end{figure}"></td></tr>
+</tbody></table>
+</div>
+Compute the tf-idf weights for the terms car, auto, insurance, best, for each document, using the idf values from Figure <a href="inverse-document-frequency-1.html#fig:figureidf">6.8</a> .
+
+<p>
+</p></li>
+<li>Can the tf-idf weight of a term in a document exceed 1?
+
+<p>
+</p></li>
+<li><a name="ex:logbase"></a> <a name="p:logbase"></a> 
+How does the base of the logarithm in (<a href="inverse-document-frequency-1.html#eqn:idf">21</a>) affect the score calculation in (<a href="#eqn:docscore">23</a>)? How does the base of the logarithm affect the relative scores of two documents on a given query?
+
+<p>
+</p></li>
+<li>If the logarithm in (<a href="inverse-document-frequency-1.html#eqn:idf">21</a>) is computed base 2, suggest a simple approximation to the idf of a term.
+
+<p>
+</p></li>
+</ul>
+
+<p>
+</p><hr>
+<!--Navigation Panel-->
+<a name="tex2html1935" href="the-vector-space-model-for-scoring-1.html">
+<img width="37" height="24" align="BOTTOM" border="0" alt="next" src="http://nlp.stanford.edu/IR-book/html/icons/next.png"></a> 
+<a name="tex2html1929" href="term-frequency-and-weighting-1.html">
+<img width="26" height="24" align="BOTTOM" border="0" alt="up" src="http://nlp.stanford.edu/IR-book/html/icons/up.png"></a> 
+<a name="tex2html1925" href="inverse-document-frequency-1.html">
+<img width="63" height="24" align="BOTTOM" border="0" alt="previous" src="http://nlp.stanford.edu/IR-book/html/icons/prev.png"></a> 
+<a name="tex2html1931" href="contents-1.html">
+<img width="65" height="24" align="BOTTOM" border="0" alt="contents" src="http://nlp.stanford.edu/IR-book/html/icons/contents.png"></a> 
+<a name="tex2html1933" href="index-1.html">
+<img width="43" height="24" align="BOTTOM" border="0" alt="index" src="http://nlp.stanford.edu/IR-book/html/icons/index.png"></a> 
+<br>
+<b> Next:</b> <a name="tex2html1936" href="the-vector-space-model-for-scoring-1.html">The vector space model</a>
+<b> Up:</b> <a name="tex2html1930" href="term-frequency-and-weighting-1.html">Term frequency and weighting</a>
+<b> Previous:</b> <a name="tex2html1926" href="inverse-document-frequency-1.html">Inverse document frequency</a>
+ &nbsp; <b>  <a name="tex2html1932" href="contents-1.html">Contents</a></b> 
+ &nbsp; <b>  <a name="tex2html1934" href="index-1.html">Index</a></b> 
+<!--End of Navigation Panel-->
+<address>
+¬© 2008 Cambridge University Press<br>This is an automatically generated page. In case of formatting errors you may want to look at the <a href="http://informationretrieval.org">PDF edition</a> of the book.<br>
+2009-04-07
+</address>
+
+
+</body></html>Ytext/htmlUUTF-8´!%)-159‘_WebResourceResponse_3http://nlp.stanford.edu/IR-book/html/icons/next.pngOÕbplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_4https://nlp.stanford.edu/IR-book/html/icons/next.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ	$ »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"723377-f5-4172fdf2cce80"_Tue, 27 Jun 2006 07:44:42 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDI3IEp1biAyMDA2IDA3OjQ0OjQyIEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA4IEdNVKEWUzI0NaEYXxAZIjcyMzM3Ny1mNS00MTcyZmRmMmNjZTgwIgAIABkAJAArADgARgBUAFkAaABtAG8AdQB3AJAAkgCcAJ4AvgDAAMYAyADoAOoA7gDwAAAAAAAAAgEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAQw=_Mon, 09 Jul 2018 13:09:08 GMTUbytesS245Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ÌÚ˝!#%,4?IKMOQSUWY[egikmoqsuwyÄçí†©ÆºÀ÷Ô˘517;AF\`mrÜäû¨æ¡◊             j              ŸOıâPNG
+
+   IHDR   %     wÏu   PLTEøøøoooÁÁÁ[  Õ„π   tRNS @Êÿf   óIDATxúmé1
+√0EQF>ä¡k†>Bá˙>Ü¨ÖNŸ3˚Ø=å°k°ï‰–®êæü?≤dîåM53ñó≥≥àkARMÍ9ÆÍN»l˙‡ :C’¸5•tï∑•lÊ∏]o¶˜¡D™≠◊/˚‹°_Á\léEƒ6∂„tƒUàÍõÈ¨Ë{Ccs=Àﬂ˚@™uwˇ˚°Æ∑àÅz<lsËÓ    IENDÆB`ÇYimage/png‘_1http://nlp.stanford.edu/IR-book/html/icons/up.pngOÀbplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_2https://nlp.stanford.edu/IR-book/html/icons/up.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ' »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"72338f-d3-4172fdf2cce80"_Tue, 27 Jun 2006 07:44:42 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDI3IEp1biAyMDA2IDA3OjQ0OjQyIEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA4IEdNVKEWUzIxMaEYXxAZIjcyMzM4Zi1kMy00MTcyZmRmMmNjZTgwIgAIABkAJAArADgARgBUAFkAaABtAG8AdQB3AJAAkgCcAJ4AvgDAAMYAyADoAOoA7gDwAAAAAAAAAgEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAQw=_Mon, 09 Jul 2018 13:09:08 GMTUbytesS211Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂Î˚
+!#*2=GIKMOQSUWYcegikmoqsuw~ãêûß¨∫…‘Ì˜3/59?DZ^kpÑàú™ºø’             j              ◊O”âPNG
+
+   IHDR        ÓÎ5¿   PLTEøøøoooÁÁÁ[  Õ„π   tRNS @Êÿf   uIDATxú]ç1É0Eüd∆&CwrÑ,‹'kˆéï7n)‚çIT
+xO≤æmî'<êÊáQﬂ¸‚≤1A πŸ‡Bõ≠”P’‘+Ü◊	Ò:Ê≤◊äp€≠Yh/„iOÓ.c7˘œN§¥æpı±_è◊ƒ/11Ab$∑}    IENDÆB`Ç‘_3http://nlp.stanford.edu/IR-book/html/icons/prev.pngOŒbplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_4https://nlp.stanford.edu/IR-book/html/icons/prev.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"723383-117-4172fdf2cce80"_Tue, 27 Jun 2006 07:44:42 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDI3IEp1biAyMDA2IDA3OjQ0OjQyIEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA4IEdNVKEWUzI3OaEYXxAaIjcyMzM4My0xMTctNDE3MmZkZjJjY2U4MCIACAAZACQAKwA4AEYAVABZAGgAbQBvAHUAdwCQAJIAnACeAL4AwADGAMgA6ADqAO4A8AAAAAAAAAIBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAEN_Mon, 09 Jul 2018 13:09:08 GMTUbytesS279Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ÌÚ˝!#%,4?IKMOQSUWY[egikmoqsuwyÄçí†©ÆºÀ÷Ô˘628<BG]ansáãü≠ø¬ÿ             j              ⁄OâPNG
+
+   IHDR   ?     Gü˝T   PLTEøøøoooÁÁÁ[  Õ„π   tRNS @Êÿf   πIDATxúÖê=
+√0Ö_pFÅóD‡5‡K§˜	ttÍﬁ°CÒ)ÈË√§t-¥™”}Ò¸Y“#%¿°∆4î“ÅÕ•d/ç«˘™ÂvµÎ`3v3t‚E$†S„‡ô˘£Á∞5ïù™s}jﬂf/ãπö¿åàÅàîhQ!û‹‰€ï=KV_≥™N8‚Kõ¿˛8í!˚ô)äÇx'á…Îë“»∏Ÿ Dòàπ^K˘Í-Íü˛sNHº!%≥    IENDÆB`Ç‘ _7http://nlp.stanford.edu/IR-book/html/icons/contents.pngO“bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_8https://nlp.stanford.edu/IR-book/html/icons/contents.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀü »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"72336a-116-4172fdf2cce80"_Tue, 27 Jun 2006 07:44:42 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDI3IEp1biAyMDA2IDA3OjQ0OjQyIEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA4IEdNVKEWUzI3OKEYXxAaIjcyMzM2YS0xMTYtNDE3MmZkZjJjY2U4MCIACAAZACQAKwA4AEYAVABZAGgAbQBvAHUAdwCQAJIAnACeAL4AwADGAMgA6ADqAO4A8AAAAAAAAAIBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAEN_Mon, 09 Jul 2018 13:09:08 GMTUbytesS278Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂Òˆ
+%')08CMOQSUWY[]_ikmoqsuwy{}Ñëñ§≠≤¿œ⁄Û˝:6<@FKaerwãè£±√∆‹             j              ﬁOâPNG
+
+   IHDR   A     ØH   PLTEøøøoooÁÁÁ[  Õ„π   tRNS @Êÿf   ∏IDATxúçê=
+√0Ö_–j»UTº‚KÙ>Ü¨Y≥wˆ:®xÙ*ÖÆÖV˛K»–7Hœüd	!xx8‹!Ä2
+†»€Û‚™*dqM#l ¡óîÓ<WY∞Du£1⁄'p?}Û•®LŒ”k±€Ã(!]ŸaÇ%f>a"¢Å≠ñ‘d2 ãz∂˜É9mŸ∫´…·äù∫C“Sr-$¢ü°°ó‚ªBDÃ¡`GRÍú‹ ©áéw˝A⁄sö‹•òVtˆŒG    IENDÆB`Ç‘"#$_4http://nlp.stanford.edu/IR-book/html/icons/index.pngOŒbplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_5https://nlp.stanford.edu/IR-book/html/icons/index.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ& »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"723375-f6-4172fdf2cce80"_Tue, 27 Jun 2006 07:44:42 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDI3IEp1biAyMDA2IDA3OjQ0OjQyIEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA4IEdNVKEWUzI0NqEYXxAZIjcyMzM3NS1mNi00MTcyZmRmMmNjZTgwIgAIABkAJAArADgARgBUAFkAaABtAG8AdQB3AJAAkgCcAJ4AvgDAAMYAyADoAOoA7gDwAAAAAAAAAgEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAQw=_Mon, 09 Jul 2018 13:09:08 GMTUbytesS246Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ÓÛ˛"$&-5@JLNPRTVXZ\fhjlnprtvxzÅéì°™ØΩÃ◊˙628<BG]ansáãü≠ø¬ÿ             j              ⁄OˆâPNG
+
+   IHDR   +     i⁄‹∆   PLTEøøøoooÁÁÁ[  Õ„π   tRNS @Êÿf   òIDATxúuè=
+1Ö$Â@,<»@⁄˜züÄg∞ﬂb…)¶∞Ù09ÄÖìô]—Ö}Å|o~x$®
+PU$Ù%8k}Ë¡ëOO‰≠∂›nÜú)BÄbô›Ø™≥&®ä7«ât»õ^Ò@€MÀ=”4c¬™„ø'≠>∑ÙJM∏{ˆ#_ØüvOy/Û«€SLó€A%bÕGr    IENDÆB`Ç‘&'(_;https://nlp.stanford.edu/IR-book/html/htmledition/img67.pngO‘bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_;https://nlp.stanford.edu/IR-book/html/htmledition/img67.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ,à »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"72308d-bb-466f9fa0eb3c0"_Tue, 07 Apr 2009 17:02:15 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAyOjE1IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEwOjQyOjExIEdNVKEWUzE4N6EYXxAZIjcyMzA4ZC1iYi00NjZmOWZhMGViM2MwIgAIABkAJAArADgARgBUAFkAaABtAG8AdQB3AJAAkgCcAJ4AvgDAAMYAyADoAOoA7gDwAAAAAAAAAgEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAQw=_Mon, 09 Jul 2018 10:42:11 GMTUbytesS187Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂Ù˘(*,3;FPRTVXZ\^`blnprtvxz|~Äáîôß∞µ√“›ˆ <8>BHMcgtyçë•≥≈»ﬁ             j              ‡OªâPNG
+
+   IHDR   
+      Æ,ƒH   !PLTE≥≥≥®®®úúúÑÑÑ```HHH<<<000$$$   µ'U   tRNS @Êÿf   HIDATôc`ÄÉÉ!∆»¿ŒÄòÅ8 à'†
+ØZµ U »eö§ÄX ®Õ› ˙X¡:§¿lW0Ÿ∂ì∞õ áÇehMYª    IENDÆB`Ç‘*+,_<https://nlp.stanford.edu/IR-book/html/htmledition/img354.pngO’bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_<https://nlp.stanford.edu/IR-book/html/htmledition/img354.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ2‰ »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"722f2f-d8-466f9f7048100"_Tue, 07 Apr 2009 17:01:24 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAxOjI0IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEwOjQyOjExIEdNVKEWUzIxNqEYXxAZIjcyMmYyZi1kOC00NjZmOWY3MDQ4MTAwIgAIABkAJAArADgARgBUAFkAaABtAG8AdQB3AJAAkgCcAJ4AvgDAAMYAyADoAOoA7gDwAAAAAAAAAgEAAAAAAAAAGQAAAAAAAAAAAAAAAAAAAQw=_Mon, 09 Jul 2018 10:42:11 GMTUbytesS216Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ı˙ )+-4<GQSUWY[]_acmoqsuwy{}Åàïö®±∂ƒ”ﬁ˜=9?CINdhuzéí¶¥∆…ﬂ             j              ·OÿâPNG
+
+   IHDR        Vw   *PLTE≥≥≥®®®úúúêêêÑÑÑxxx```TTTHHH<<<000   á *	   tRNS @Êÿf   \IDATôc``‡fÄ 5ŒÇ.,`CASã6I`™a``®a`‡`g`‡Âbi‹ ± s’&ô.	∆Ö,@'28HÉ,ˆeÛq&…@d  ◊o	PFUJF    IENDÆB`Ç‘./0_<https://nlp.stanford.edu/IR-book/html/htmledition/img406.pngO÷bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_<https://nlp.stanford.edu/IR-book/html/htmledition/img406.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ9P »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"722f69-2ea-466f9f79d1780"_Tue, 07 Apr 2009 17:01:34 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAxOjM0IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEwOjQyOjExIEdNVKEWUzc0NqEYXxAaIjcyMmY2OS0yZWEtNDY2ZjlmNzlkMTc4MCIACAAZACQAKwA4AEYAVABZAGgAbQBvAHUAdwCQAJIAnACeAL4AwADGAMgA6ADqAO4A8AAAAAAAAAIBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAEN_Mon, 09 Jul 2018 10:42:11 GMTUbytesS746Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ı˙ )+-4<GQSUWY[]_acmoqsuwy{}Åàïö®±∂ƒ”ﬁ˜>:@DJOeiv{èìßµ« ‡             j              ‚OÍâPNG
+
+   IHDR   ë     ÍsN$   6PLTE≥≥≥}}}®®®úúúíííêêêÑÑÑxxxlll```TTTHHH<<<000$$$   àÉø˝   tRNS @Êÿf  bIDATXÖÌWÈí§ Œ¬5 ˚øÏ$ò±˜«NÌV’’MìêÀê!Ò¬YÔ0ÚEèÂ4ÚÍ©ı‹”ç¥¸Å(¿pﬂ©»Æl!ÿ}«ã^XÑkzQÔ_Çá{|õ3œƒ˛\«˛?'ıõ]r¸Õ"–U¶úÿ›˝x∫¸s|òÃ)—7:W¯o‡∂∫0vË◊¡s√tf«n©©!cáΩ·ÿÚ4AÑ…\|>ÛÔ§´ E7IÿÊµw*Fˆï-å`;≈I ¶Ô„∞ñÁ¡æj~„pdÙ4N„A÷KAl˚™§π<Ù|Ì®&ù]Õ‹I27Í·íÛΩ<ΩVè◊BQ4ÖÖµïiKßE™çUPkEtöõYZúíñ]P‚fâπ-´kvüUòTiÑ"®®QA∂j√e±õ∏(Ì-&3ÛH:µ»àEPÜXçÌ≈0…#ÚÔ”€û˚Uò mÊ≥ +m/nWÌ 3ﬁx„çó‡ñ£‡S¡§≠Ø!º(Á+P*øvWböπè⁄òz7›Î^u∫xë}x
+cé—˘Ï©J& ÿ |'·XüSúáÏ&rKtkÌã‰yLJ¯ÀS3ºŒYDΩ]#lx5ˇå)¶ﬁ6è ›÷ƒıÏ”¢ÙÆÑÊÜxâ/W…€0ó{£õ)ÓØ;t‚ìEïp¶cLo4Nß“õó–Ó∂Áõr®"/y¨yuk [≈S?Åáà+!˝jŸ¡£|
+Ùˆ)G!≥¥Âh˘@QÈ‘¿ÌŸ[™ç÷Äcø-&§≤€IÓÒ˘@•0æØ˜’ÙÆ	_ ∆ı?à®∑Uè[A!    IENDÆB`Ç‘234_<https://nlp.stanford.edu/IR-book/html/htmledition/img407.pngO÷bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_<https://nlp.stanford.edu/IR-book/html/htmledition/img407.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀ?£ »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"722f6a-1aa-466f9f79d1780"_Tue, 07 Apr 2009 17:01:34 GMT_ÿ
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAxOjM0IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA3IEdNVKEWUzQyNqEYXxAaIjcyMmY2YS0xYWEtNDY2ZjlmNzlkMTc4MCIACAAZACQAKwA4AEYAVABZAGgAbQBvAHUAdwCQAJIAnACeAL4AwADGAMgA6ADqAO4A8AAAAAAAAAIBAAAAAAAAABkAAAAAAAAAAAAAAAAAAAEN_Mon, 09 Jul 2018 13:09:07 GMTUbytesS426Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ı˙ )+-4<GQSUWY[]_acmoqsuwy{}Åàïö®±∂ƒ”ﬁ˜>:@DJOeiv{èìßµ« ‡             j              ‚O™âPNG
+
+   IHDR   6     Ï?˛á   3PLTE≥≥≥®®®úúúêêêàààÑÑÑxxxlll```TTTHHH<<<000$$$   E¸â   tRNS @Êÿf  %IDAT8çÌT…íÑ 0¬¢˘ˇØùE—÷Æ∂Ê“áyU.^6í tp€?8ÉCEzYmPÖ›œÈ£Øt}¯bS∞∏aÇm™∫ﬁEq)”Ë)>79ÄW#´¿/{àÀÚæ◊BïTFF√ë8Xâ√¡u≤DÕc¶ø®N©”rqqº<Úä«$ß™R!ÀΩ§Ñ'ûëxUÒŒÛn‘â6hÈå&§ r”ô!3í|íP(^{≠≈`Êª=Ç8›≈˚çwgü√r-qn∫Œy8‰èz£ñtæk(÷œx4J
+≠˝#⁄{nçeTû\_„∑÷Ù1sn2≤9–Ãﬁm•OkÌ`ôÖ[7•%Rfüc5!’ûå[¨Îex¯Ú¥¯ Î@˛«Ü_h∏g89∏-    IENDÆB`Ç‘678_<https://nlp.stanford.edu/IR-book/html/htmledition/img408.pngO€bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_<https://nlp.stanford.edu/IR-book/html/htmledition/img408.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀEˆ »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"722f6b-42c-466f9f79d1780"_Tue, 07 Apr 2009 17:01:34 GMT_‹
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAxOjM0IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA3IEdNVKEWVDEwNjihGF8QGiI3MjJmNmItNDJjLTQ2NmY5Zjc5ZDE3ODAiAAgAGQAkACsAOABGAFQAWQBoAG0AbwB1AHcAkACSAJwAngC+AMAAxgDIAOgA6gDvAPEAAAAAAAACAQAAAAAAAAAZAAAAAAAAAAAAAAAAAAABDg==_Mon, 09 Jul 2018 13:09:07 GMTUbytesT1068Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ı˙ )+-4<GQSUWY[]_acmoqsuwy{}Åàïö®±∂ƒ”ﬁ˜>>DIOTjn{Äîò¨∫ÃœÂ             j              ÁO,âPNG
+
+   IHDR   ´   -  T(∂y   0PLTE≥≥≥®®®úúúêêêÑÑÑxxxlll```TTTHHH<<<000$$$   ÍYÀû   tRNS @Êÿf  ™IDATHâÌVOhUˇMÊÕÓd7ŸôÇá–¢.≈õêT[⁄˙⁄‰QHºH±DâÙœ%õCi†ó)¥2çHí√B—,P‡&^<iÑR°óÆ‡!«HÈE}ï4›∂‡˙Ω˜f6≥õl≤	i•‚ÔΩyÔ˚ﬁÔ}ÔﬂÔ∞éPEa<ËrÆjæˆπQP>÷°¥ëC¢Æ¨0Ñ!{õ» *ô
+`î—¬∑8î|Æ” „ßr÷©jè¿ﬂ÷))ﬂÕÿ°^o|NIC	MS—0 #[~òÍ}ÄÓ≤æ£öÿ@JÙ	∞K…CP≥îÕ‹’LyEa!æÌÒ[¥qÕvv1´ÁÉÑ≤6◊5ìŒ¢GQÇ<:˙`_Yyc__8∑Éâ∞Îà4"I´ùŒÖ«	¬qX1'Ï†ZâÜ±r2ñΩ*V]Óµœ¡CñÇ—V'’NÑH¬€güÆ◊ÎbΩö‹j¶÷VŒÿÈ†õm‚Ù3<€/⁄ã\[Ø^Mœc≥RSÙ›Ã%ı›Ú^R∂Í
+ìlfKÚ®F{M∑∂lg˛1Ùà¬©°V…ûC∫idçTÀO}¿<X4DπD£ÅØœ/#*´ÇCk.â1gÃ	\(´ì<∫∏éé≠ø·PlZ≈ÊÕ˜PÕ≥◊ıVÀ)∆d≥ÇóπîbzH7ªTä≠CB
+åV´–:≠ê@•If<¢ºräç˚;≥‚£-‰^l·ﬁ5vrá^K¿,uÀÌ¿Ú;åù!_Í8ã`sEno±ˇ„?ÇπÇ¥Fqõ∞`z±µ…å]◊c$HMŒÙc£Ì§OwvâÑa?≤5 º€J{4Œ2äôfÔèÖ√àû])f,ˆ‚ï˚„0ÊYı ÛÜ˝yhqﬂë¬|˛≥Ùü˛o¶”.?]¸∂HSπ^1ødwÒNÕèá˛#√ÂN◊*©Ï«C©≈-ÃE∫mh˝’â“e2[sË'¬l-)Ñ	…˛~/≈-√®Ì	ÈËÂØÀæ¶`+·SHËtæAåVï9L»jˇI‡Õœhx˚Î)cw|{˘"Üü‰å/æ˜Ò	2kËz¸“Ø¿πÊd{¢µ5ÓŒﬁòßr∫fÃ’>ºz°ñ¶î—cË˜±RÙXùA*‘£‘‰4Ó´"9∫I«Yœ∞Ê€ÍŒ8pªQlˆ(>ÛÊÊ=œ∂£‹f]cmó˝ü3¡Ç`œYŸ-◊ß‚≠Dgø˝ù"ôSØ—//Ô)+“W–«Å{˚˜ñ6¬µgC˚Ø‡©ãÂW∂.ñ    IENDÆB`Ç‘:;<_<https://nlp.stanford.edu/IR-book/html/htmledition/img409.pngO€bplist00‘fgX$versionX$objectsY$archiverT$top Ü†Ø#)*0123KLMNOPQRSTUVWXYZ[\]aU$null›	
+ !"___nsurlrequest_proto_prop_obj_6___nsurlrequest_proto_prop_obj_3R$2___nsurlrequest_proto_prop_obj_0R$3___nsurlrequest_proto_prop_obj_4V$class___nsurlrequest_proto_prop_obj_1R$4R$0___nsurlrequest_proto_prop_obj_5___nsurlrequest_proto_prop_obj_2R$1ÄÄÄ	ÄÄÄÄ Ä”$% '(WNS.base[NS.relativeÄ ÄÄ_<https://nlp.stanford.edu/IR-book/html/htmledition/img409.png“+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿yÀL8 »”456@JWNS.keysZNS.objects©789:;<=>?Ä	Ä
+ÄÄÄÄÄÄÄ©ACDEFGHIÄÄÄÄÄÄÄÄÄÄVServer\Content-TypeTEtag]Last-ModifiedX__hhaa__TDate]Accept-Ranges^Content-LengthZConnection_Apache/2.2.15 (CentOS)Yimage/png_"722f6c-a81-466f9f79d1780"_Tue, 07 Apr 2009 17:01:34 GMT_‹
+
+YnBsaXN0MDDYAQIDBAUGBwgJCw0PERMVF1pDb25uZWN0aW9uVlNlcnZlclxDb250ZW50LVR5cGVdTGFzdC1Nb2RpZmllZF1BY2NlcHQtUmFuZ2VzVERhdGVeQ29udGVudC1MZW5ndGhURXRhZ6EKVWNsb3NloQxfEBZBcGFjaGUvMi4yLjE1IChDZW50T1MpoQ5ZaW1hZ2UvcG5noRBfEB1UdWUsIDA3IEFwciAyMDA5IDE3OjAxOjM0IEdNVKESVWJ5dGVzoRRfEB1Nb24sIDA5IEp1bCAyMDE4IDEzOjA5OjA3IEdNVKEWVDI2ODmhGF8QGiI3MjJmNmMtYTgxLTQ2NmY5Zjc5ZDE3ODAiAAgAGQAkACsAOABGAFQAWQBoAG0AbwB1AHcAkACSAJwAngC+AMAAxgDIAOgA6gDvAPEAAAAAAAACAQAAAAAAAAAZAAAAAAAAAAAAAAAAAAABDg==_Mon, 09 Jul 2018 13:09:07 GMTUbytesT2689Uclose“+,^__NSMutableDictionary£^`/\NSDictionary“+,bc_NSHTTPURLResponse£de/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiver—hi_WebResourceResponseÄ    # - 2 7 W ] x ö º ø · ‰/25Wy|~ÄÇÑÜàäåçèëìïú§∞≤¥∂ı˙ )+-4<GQSUWY[]_acmoqsuwy{}Åàïö®±∂ƒ”ﬁ˜>>DIOTjn{Äîò¨∫ÃœÂ             j              ÁO
+ÅâPNG
+
+   IHDR     b  ˆm]   3PLTE≥≥≥sss®®®úúúêêêÑÑÑxxxlll```TTTHHH<<<000$$$   4<rÓ   tRNS @Êÿf  	¸IDATxúÌ\çö´(e¡®Tﬁˇi7P±”ÈÌ›5ﬂ‘éñ¿1B8	¥¬]âp"´„≥Ö8ñ8ÀE	J(Ãñk[—ÖRPçTRYëDS_G˘ÛL	ﬁd]+WÓ¨≤4¬˜6^4êê‚ä∆ñèM\ v-µ ™ƒMŸè*k ˙ E©PwUjwfÂ¸>√„√Æ◊_=õÑ\™,z¸ˇÆw—©o”≠<T	s÷àVH¨È0µÆ@Êë¥ŸõnjÒïl5‘‘‘À~Wwe¿9∆>K˝K≤˚®y„]ÄÎ58n\+∞πR[dz#©Ÿﬁ¶îN˚7a¯qüÃ’ºåŒ\x™{wPË…°∫M\Œlc˚mZ∞<“Ús÷\ÉûÊA·k†·Ëh(¨≠CW–?⁄¸bZ˘=Kz¡±Ìr⁄m‡èJ@ÆÁ¿ı]ˆ_ê´¡vC∂P…ÀGâ≥:ykngïÃÊÆ∏áD5ËËlÃLÊ⁄	T√f´aê—≥=Ù„ã^ù=´ìj`@“œl:xûE €'#Åπ∆b¨”At∂si%+¸;$
+Dó⁄¯,FnÖ[»çq@ª´g;È·ÿCìˇ_M√æåÀî¸‹g-y´˛R·'?˜6fC√î3ÿµ∑q<–Ü˘N‰Nf5Ê0¿¥v¸!ÑV¡Ú¸œÄõÊâ`GdºZ„÷n?Äpˇ≥≤⁄!Ü–˛["ßÍf¯äÕBËKº‚ÿ<#ıAˆ-(Voìrí9nÉB“G)˘¢Ò7C–ÆI~6ç·ïë#û*íS¡Q9+A7 àF¶?3bM±$›—â9jè±mÇÈﬂ7AÅgä£Í‰K˚¬€ î£§R3võÚb•øR’òv§'¥z¥Y≥r‡Yñ:ó˜O¶mñkΩœ+òÑ®_Ì€—‡_Ii)» ‰%Gû Ò…ƒ0Áú$Eg*a‹ÍäÖx°‘ô(xÑV-ı´˙¬@p˚´µÕÖ.›Ñü¿“~¡óÌŒ=˚aDyB¶;äÇë∑)>*c8˘?ò∆b#ù‘K4Ééo4ŸC≠È®´s∏ˇíæ«ÂeÙ7Ô¥lÜWjÏWáﬁv±ƒ]ÉÏà7;µÕwø
+Å^7g˙}Rp1≈çØj>–“∏≠ºyX˘„Ç∞chDÏ©ƒå|V[ßè◊!∏%h;Ahïs–∂#◊^mçıvÈö¢CÚ|ëgZ!–‰D.8ÔËß£ÇÊi–Ñ
+ñÏoˇA⁄7˛µﬁq£∞ ˘ê©MÜ=ƒ)ÚÇ¥‰382´\QıB#@î“I*·SP˝	ÇbƒúÅÃRiaRîe‰%2l∆à≥∏®wÀ"pØ|.8Œ!Ï§QÍaµoeêw!4 X0Ç»=à0—~Uæﬂ5=ﬁA∫‰¢1Ò˚÷ørpQ;C∏9,iL¶=â¢ä’é∏‘Nq-çn‰≈⁄°3Ã,nH&ó#õJCÿ«q˛üv‡8Êt¡Ωáìô#∂¥hÑF˙TØ0‰É—§4Y›äL&å≈ƒƒr~\“PÔÈ(÷kZùŸùëƒtéhË§e l·ÊbP>ﬁ°º\%d≤?ö˙˘ïÄ¿ƒ≠]≥ÃG+,§IJ©ñ˝iº¢áYv6¯}B)ÖHgEô∏%\±yÖ*DûÏ"§˜Æ|-Ï#LOâõÿÓfØ3ˆ
+∏≤ﬁ5-≠õ!–Ω©?>bˆAç"D.Ê›ˆÏºèêÿ‡$¥áÄÆÂ˜≈ÑÜdöBK^ÄJ;hO‹‰‚ˇæiD<æﬁ%KAÄ’≤„5^Ö;™·9îâ ‘át sú¸=bfDRr‰ù”tm–õø≠ìïáê[∞ÒóO|»#X∫<v∑,,<È"ÑefŸAÿF‹É¿Ñ+˜iÊAxµïpÆ,ëπvDÓ@≤~å´¬Ç@Z:L3h=ÄZ…· ˇ;ÑﬂÒjµ/ÍΩÆˆ#("jõ^¡ªs´^QM‚‰lìR8Ãj©Í§6∆ÓˇcF‡\Cx◊Ót?t¡•çPT„•+÷©ıä"{µOA8+•)¯Ïˇ“ºå‹∞ﬁ©âf¨Wc:¨nHöC˙¥§√)ÏövbZo˝“§÷∏ìZá/©≠°Õ¢ˆi#ËøóG≤„öòπ4©)ü∏ã‘ö©∫Põ∑¿‹x¨ˆ!#4¡UiÔë⁄A˜<4âôúËA„l0ª¥ö‘ˆÕ™6Ñı$H®…Y≠€´#5”ÿu1ª˙`O¯Äﬁ∑Oë—{å#µ«÷“8«3∂nÀX÷√Ÿeﬁ j1¡<™˝A#0p¢]ù¶~Eë›nj-´mÛ¨v4B£•$C—Q)ÎåÎ
+ﬂîæêäõY(_&(
+Ä∏aÑµµÑ⁄¡ÕÚo´WŒ]ÀµÓ¸e_9Ì(~]õ˝1Ê∏TÛ3•v0B‡Wdä˛™`°~á0ßæMÇ∏Òûµà`’é√Å¸á%Ç¶ùëŒ ás†◊®‘4o!Í‹!‚≠5°"¶YV€ÊYÌô"#à«ã⁄cÑ*#‹‹b∑ØæF•2)¢ÑÄQí”fÀ˚ÕÊMrå‘SFË≠Ÿ;Î0©6xﬂ7Mo|π÷S„˛˝Fs>¡÷E0aÑvNC∂|Õ¯˝Zâ-Ó<K5˝µh«»ÚWzı—˚≠Ê¸3çÈO¬∆¿∆í`1BËwô”ù‚Xµ≈o™ë¯ë Qf.EõA"ﬂrCQ¯Ø¸sx◊N¸†LıÕ‹A~6	£åWYOœ≈ı=µE`$ïaÔJûŸ·1Çxå∞®=FHsﬂ$≠˙*!bÎÛdÎäjbeµ kz≠E‘á˙Çû‡3~∏_*»≤¢öZY-µ2ß◊∂[Wú";‡–[7ëµ∞#ÇBfY| t˝‰öÖLTnYÎ§€Å©â´Øë})À≤¢zZYΩNØMlÚÆLñV~ƒáa“~k9_XìÍÕóõ◊:˝é´h<˝ö∂’√ jY|zç‚ç©3˜Ω2S
+^€‰sπajè∆
+uöÉ?©4Çﬂwg¡/(>¥&π≤Zí(Ω¶À)wŒß˝ÉéûÇ8bœ?%‘ëOQŒt4L«ßSﬂ:Ñµ‹º÷…ooj±æ_/+™©ï’Ç,È5âx h~Åc|óﬁ√~§ˆ·lŸ
+Ívıü‘{_O»¸Ñpìﬁ{˜#T≠]ÒÊzK*OV*nzﬂ"êL≈uáMÉaKç˜‹/≠D]ÎÃ≠Èªãä,©<YEkæ°aüÜ8ahàıÈ¿B¨ÒõßÒwç¿_±y¡˜9÷“»˛ó∂r=&aGDÓº©tíøiÑv˝FΩK*Ov›ö‡axDy2B«î\4nCáﬁ∑æ;ZâjÎ /ÙÑTû¨¶5<|©Ùô"≈cÑEÌ1B0¬#Ó_ä£¯«à¿    IENDÆB`Ç    1 < K b t ä ® ˛ ˇ&’&ﬂ&Â&Ò&˙''F.///"/V6%6˚77:>?'?0?jF@GZGcGöNlOeOnO¨VÑWBWKWä^c_>_G_Üf`iNiWiñpprr'rfyE}u}~}ΩÑú             =              è!
